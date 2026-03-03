@@ -324,8 +324,7 @@ public actor AppUpdater {
     }
     
     private func download(asset: Release.Asset, to destination: URL) async throws -> URL {
-        let request = releaseProvider.downloadRequest(for: asset)
-        let (downloadedURL, response) = try await configuration.session.download(for: request)
+        let (downloadedURL, response) = try await configuration.session.download(from: asset.downloadURL)
         guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }
