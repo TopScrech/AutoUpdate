@@ -36,6 +36,7 @@ Task {
     switch try await updater.prepareUpdateIfAvailable() {
     case .upToDate:
         break
+        
     case .prepared(let preparedUpdate):
         try await updater.installAndRelaunch(preparedUpdate)
     }
