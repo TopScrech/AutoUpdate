@@ -10,6 +10,7 @@ public actor AppUpdater {
         public var repository: String
         public var releasePrefix: String
         public var allowPrereleases: Bool
+        public var gitHubProxyURL: URL?
         public var codeSigningValidation: CodeSigningValidation
         public var session: URLSession
         
@@ -18,6 +19,7 @@ public actor AppUpdater {
             repository: String,
             releasePrefix: String? = nil,
             allowPrereleases: Bool = false,
+            gitHubProxyURL: URL? = nil,
             codeSigningValidation: CodeSigningValidation = .required,
             session: URLSession = .shared
         ) {
@@ -25,6 +27,7 @@ public actor AppUpdater {
             self.repository = repository
             self.releasePrefix = releasePrefix ?? repository
             self.allowPrereleases = allowPrereleases
+            self.gitHubProxyURL = gitHubProxyURL
             self.codeSigningValidation = codeSigningValidation
             self.session = session
         }
@@ -45,6 +48,7 @@ public actor AppUpdater {
         repository: String,
         releasePrefix: String? = nil,
         allowPrereleases: Bool = false,
+        gitHubProxyURL: URL? = nil,
         codeSigningValidation: CodeSigningValidation = .required,
         session: URLSession = .shared,
         releaseProvider: (any ReleaseProvider)? = nil
@@ -54,11 +58,15 @@ public actor AppUpdater {
             repository: repository,
             releasePrefix: releasePrefix,
             allowPrereleases: allowPrereleases,
+            gitHubProxyURL: gitHubProxyURL,
             codeSigningValidation: codeSigningValidation,
             session: session
         )
         self.configuration = configuration
-        self.releaseProvider = releaseProvider ?? GitHubReleaseProvider(session: session)
+        self.releaseProvider = releaseProvider ?? GitHubReleaseProvider(
+            session: session,
+            proxyURL: gitHubProxyURL
+        )
     }
     
     public func setAllowPrereleases(_ allowPrereleases: Bool) {
@@ -67,6 +75,10 @@ public actor AppUpdater {
     
     public func setCodeSigningValidation(_ validation: CodeSigningValidation) {
         configuration.codeSigningValidation = validation
+    }
+    
+    public func setGitHubProxyURL(_ proxyURL: URL?) {
+        configuration.gitHubProxyURL = proxyURL
     }
     
     public func startAutomaticChecks(
@@ -324,7 +336,11 @@ public actor AppUpdater {
     }
     
     private func download(asset: Release.Asset, to destination: URL) async throws -> URL {
-        let (downloadedURL, response) = try await configuration.session.download(from: asset.downloadURL)
+        let downloadURL = GitHubProxyURL.resolve(
+            asset.downloadURL,
+            proxyURL: configuration.gitHubProxyURL
+        )
+        let (downloadedURL, response) = try await configuration.session.download(from: downloadURL)
         guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }

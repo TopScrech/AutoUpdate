@@ -43,6 +43,21 @@ Task {
 }
 ```
 
+## GitHub proxy
+
+If you use a GitHub proxy or mirror that expects the original GitHub URL to be appended after a base URL, pass `gitHubProxyURL`
+
+```swift
+let updater = AppUpdater(
+    owner: "your-github-owner",
+    repository: "your-repo",
+    gitHubProxyURL: URL(string: "https://ghproxy.example.com"),
+    allowPrereleases: false
+)
+```
+
+This prefixes both the GitHub Releases API request and matching asset downloads, for example `https://ghproxy.example.com/https://api.github.com/...`
+
 ## Scheduled checks
 
 ```swift

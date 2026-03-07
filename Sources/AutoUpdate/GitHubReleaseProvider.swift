@@ -2,21 +2,28 @@ import Foundation
 
 public struct GitHubReleaseProvider: ReleaseProvider, Sendable {
     private let session: URLSession
+    private let proxyURL: URL?
     private let token: String?
     private let additionalHeaders: [String: String]
     
     public init(
         session: URLSession = .shared,
+        proxyURL: URL? = nil,
         token: String? = nil,
         additionalHeaders: [String: String] = [:]
     ) {
         self.session = session
+        self.proxyURL = proxyURL
         self.token = token
         self.additionalHeaders = additionalHeaders
     }
     
     public func releases(owner: String, repository: String) async throws -> [Release] {
-        let url = URL(string: "https://api.github.com/repos/\(owner)/\(repository)/releases")!
+        let url = GitHubProxyURL.releasesURL(
+            owner: owner,
+            repository: repository,
+            proxyURL: proxyURL
+        )
         var request = URLRequest(url: url)
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
         request.setValue("AutoUpdate", forHTTPHeaderField: "User-Agent")
