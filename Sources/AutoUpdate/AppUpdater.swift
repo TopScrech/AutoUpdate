@@ -274,8 +274,11 @@ public actor AppUpdater {
     private func viableAsset(for release: Release) -> Release.Asset? {
         guard let version = release.semanticVersion else { return nil }
         
-        let expectedName = "\(configuration.releasePrefix.lowercased())-\(version.description.lowercased())"
-        let expectedNameWithV = "\(configuration.releasePrefix.lowercased())-v\(version.description.lowercased())"
+        let expectedBaseNames = Self.expectedAssetBaseNames(
+            releasePrefix: configuration.releasePrefix,
+            release: release,
+            version: version
+        )
         
         return release.assets.first { asset in
             guard let archiveType = asset.archiveType else { return false }
@@ -285,15 +288,36 @@ public actor AppUpdater {
             
             switch archiveType {
             case .zip:
-                return nameWithoutExtension == expectedName || nameWithoutExtension == expectedNameWithV
+                return expectedBaseNames.contains(nameWithoutExtension)
                 
             case .tar:
-                return nameWithoutExtension == expectedName
-                || nameWithoutExtension == expectedNameWithV
-                || nameWithoutExtension == "\(expectedName).tar"
-                || nameWithoutExtension == "\(expectedNameWithV).tar"
+                return expectedBaseNames.contains(nameWithoutExtension)
+                || expectedBaseNames.contains("\(nameWithoutExtension).tar")
             }
         }
+    }
+
+    static func expectedAssetBaseNames(
+        releasePrefix: String,
+        release: Release,
+        version: SemanticVersion? = nil
+    ) -> Set<String> {
+        guard let resolvedVersion = version ?? release.semanticVersion else { return [] }
+        
+        let normalizedReleasePrefix = releasePrefix.lowercased()
+        let rawTagName = release.tagName
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+        let rawTagNameWithoutV = rawTagName.hasPrefix("v")
+            ? String(rawTagName.dropFirst())
+            : rawTagName
+        
+        return [
+            "\(normalizedReleasePrefix)-\(resolvedVersion.description.lowercased())",
+            "\(normalizedReleasePrefix)-v\(resolvedVersion.description.lowercased())",
+            "\(normalizedReleasePrefix)-\(rawTagName)",
+            "\(normalizedReleasePrefix)-\(rawTagNameWithoutV)"
+        ]
     }
     
     private func prepare(_ candidate: UpdateCandidate) async throws -> PreparedUpdate {
