@@ -3,7 +3,7 @@ import Foundation
 public struct UpdateCandidate: Hashable, Sendable {
     public let release: Release
     public let asset: Release.Asset
-
+    
     public init(release: Release, asset: Release.Asset) {
         self.release = release
         self.asset = asset
@@ -15,7 +15,7 @@ public struct PreparedUpdate: Hashable, Sendable {
     public let asset: Release.Asset
     public let bundleURL: URL
     public let temporaryDirectoryURL: URL
-
+    
     public init(
         release: Release,
         asset: Release.Asset,

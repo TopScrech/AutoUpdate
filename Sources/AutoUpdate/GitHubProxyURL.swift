@@ -16,8 +16,8 @@ enum GitHubProxyURL {
         }
         
         let prefix = proxyURL.absoluteString.hasSuffix("/")
-            ? proxyURL.absoluteString
-            : "\(proxyURL.absoluteString)/"
+        ? proxyURL.absoluteString
+        : "\(proxyURL.absoluteString)/"
         
         return URL(string: "\(prefix)\(url.absoluteString)") ?? url
     }

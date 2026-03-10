@@ -38,4 +38,20 @@ extension Bundle {
         
         return String(authorityLine.dropFirst("Authority=".count))
     }
+    
+    func validateCodeSignature() async throws {
+        let output = try await ProcessExecutor.run(
+            "/usr/bin/codesign",
+            arguments: ["--verify", "--deep", "--strict", "--verbose=2", bundleURL.path]
+        )
+        
+        guard output.terminationStatus == 0 else {
+            let details = String(decoding: output.standardError, as: UTF8.self)
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            throw AppUpdaterError.codeSigningValidationFailed(
+                bundleURL,
+                details: details.isEmpty ? nil : details
+            )
+        }
+    }
 }

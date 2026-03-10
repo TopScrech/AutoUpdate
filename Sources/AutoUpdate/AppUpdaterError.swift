@@ -7,6 +7,7 @@ public enum AppUpdaterError: Error, LocalizedError, Sendable {
          updateCheckAlreadyRunning,
          noDownloadedApplicationBundle,
          codeSigningIdentityUnavailable(URL),
+         codeSigningValidationFailed(URL, details: String?),
          codeSigningIdentityMismatch(expected: String, actual: String),
          unsupportedArchive(contentType: String, fileName: String),
          extractionFailed,
@@ -31,6 +32,13 @@ public enum AppUpdaterError: Error, LocalizedError, Sendable {
             
         case .codeSigningIdentityUnavailable(let bundleURL):
             "Code signing identity is unavailable for bundle: \(bundleURL.path)"
+            
+        case .codeSigningValidationFailed(let bundleURL, let details):
+            if let details, !details.isEmpty {
+                "Code signing validation failed for bundle: \(bundleURL.path)\n\(details)"
+            } else {
+                "Code signing validation failed for bundle: \(bundleURL.path)"
+            }
             
         case .codeSigningIdentityMismatch(let expected, let actual):
             "Code signing identity mismatch expected \(expected) but got \(actual)"

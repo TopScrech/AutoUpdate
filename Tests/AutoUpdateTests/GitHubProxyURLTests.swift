@@ -18,10 +18,7 @@ func prefixesReleaseAPIRouteWithProxy() {
         proxyURL: proxyURL
     )
     
-    #expect(
-        url.absoluteString
-            == "https://ghproxy.example.com/https://api.github.com/repos/owner/repository/releases"
-    )
+    #expect(url.absoluteString == "https://ghproxy.example.com/https://api.github.com/repos/owner/repository/releases")
 }
 
 @Test
@@ -30,8 +27,5 @@ func prefixesAssetDownloadRouteWithProxy() {
     let assetURL = URL(string: "https://github.com/owner/repository/releases/download/v1.2.3/app.zip")!
     let proxiedURL = GitHubProxyURL.resolve(assetURL, proxyURL: proxyURL)
     
-    #expect(
-        proxiedURL.absoluteString
-            == "https://ghproxy.example.com/mirror/https://github.com/owner/repository/releases/download/v1.2.3/app.zip"
-    )
+    #expect(proxiedURL.absoluteString == "https://ghproxy.example.com/mirror/https://github.com/owner/repository/releases/download/v1.2.3/app.zip")
 }

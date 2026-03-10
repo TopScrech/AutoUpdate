@@ -296,7 +296,7 @@ public actor AppUpdater {
             }
         }
     }
-
+    
     static func expectedAssetBaseNames(
         releasePrefix: String,
         release: Release,
@@ -309,8 +309,8 @@ public actor AppUpdater {
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .lowercased()
         let rawTagNameWithoutV = rawTagName.hasPrefix("v")
-            ? String(rawTagName.dropFirst())
-            : rawTagName
+        ? String(rawTagName.dropFirst())
+        : rawTagName
         
         return [
             "\(normalizedReleasePrefix)-\(resolvedVersion.description.lowercased())",
@@ -381,6 +381,8 @@ public actor AppUpdater {
         guard configuration.codeSigningValidation == .required else {
             return
         }
+        
+        try await downloadedBundle.validateCodeSignature()
         
         let installedIdentity = try await Bundle.main.codeSigningIdentity()
         let downloadedIdentity = try await downloadedBundle.codeSigningIdentity()

@@ -24,6 +24,7 @@ public struct GitHubReleaseProvider: ReleaseProvider, Sendable {
             repository: repository,
             proxyURL: proxyURL
         )
+        
         var request = URLRequest(url: url)
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
         request.setValue("AutoUpdate", forHTTPHeaderField: "User-Agent")

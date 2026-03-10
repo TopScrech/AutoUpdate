@@ -12,8 +12,8 @@ enum ArchiveExtractor {
         switch type {
         case .zip:
             output = try await ProcessExecutor.run(
-                "/usr/bin/unzip",
-                arguments: ["-q", archiveURL.path, "-d", directoryURL.path]
+                "/usr/bin/ditto",
+                arguments: ["-x", "-k", archiveURL.path, directoryURL.path]
             )
             
         case .tar:
