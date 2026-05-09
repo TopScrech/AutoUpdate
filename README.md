@@ -1,6 +1,6 @@
 # AutoUpdate
 
-Modern async/await macOS app updater inspired by `mxcl/AppUpdater`
+Modern async/await macOS app updater library inspired by `mxcl/AppUpdater`, powered by GitHub Releases
 
 ## Features
 
