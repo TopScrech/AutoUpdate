@@ -77,3 +77,7 @@ Task {
     )
 }
 ```
+
+## Projects using AutoUpdate
+- 💨 [FanControl](https://github.com/TopScrech/FanControl) - Fan control for macOS
+- ☕️ [Latte](https://github.com/TopScrech/Latte) - Keep your Mac awake
