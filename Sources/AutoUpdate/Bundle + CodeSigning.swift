@@ -6,6 +6,7 @@ extension Bundle {
         
         let bundlePath = bundleURL.path
         let executablePath = executableURL.path
+        
         guard executablePath.hasPrefix(bundlePath) else { return nil }
         
         let relativePath = executablePath.dropFirst(bundlePath.count)
@@ -48,6 +49,7 @@ extension Bundle {
         guard output.terminationStatus == 0 else {
             let details = String(decoding: output.standardError, as: UTF8.self)
                 .trimmingCharacters(in: .whitespacesAndNewlines)
+            
             throw AppUpdaterError.codeSigningValidationFailed(
                 bundleURL,
                 details: details.isEmpty ? nil : details
