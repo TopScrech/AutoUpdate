@@ -88,8 +88,13 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
         if lhs.patch != rhs.patch { return lhs.patch < rhs.patch }
         
         if lhs.prerelease.isEmpty && rhs.prerelease.isEmpty { return false }
-        if lhs.prerelease.isEmpty { return false }
-        if rhs.prerelease.isEmpty { return true }
+        
+        let lhsIsPatch = lhs.hasPatchPrerelease
+        let rhsIsPatch = rhs.hasPatchPrerelease
+        
+        if lhs.prerelease.isEmpty { return rhsIsPatch }
+        if rhs.prerelease.isEmpty { return !lhsIsPatch }
+        if lhsIsPatch != rhsIsPatch { return !lhsIsPatch }
         
         let maxCount = max(lhs.prerelease.count, rhs.prerelease.count)
         
@@ -128,5 +133,9 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
             
             return .text(String(value))
         }
+    }
+    
+    private var hasPatchPrerelease: Bool {
+        prerelease.first == .text("patch")
     }
 }
