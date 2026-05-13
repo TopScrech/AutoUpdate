@@ -20,9 +20,17 @@ struct Tests {
     @Test
     func stableNewerThanBeta() throws {
         let beta = try SemanticVersion(parsing: "1.0.0-beta.1")
-        let stable = try SemanticVersion(parsing: "1.0.0")
+        let release = try SemanticVersion(parsing: "1.0.0")
         
-        #expect(beta < stable)
+        #expect(beta < release)
+    }
+    
+    @Test
+    func releaseNewerThanRC() throws {
+        let rc = try SemanticVersion(parsing: "1.0.0-rc.1")
+        let release = try SemanticVersion(parsing: "1.0.0")
+        
+        #expect(rc < release)
     }
     
     @Test

@@ -17,6 +17,13 @@ Modern async/await macOS app updater library inspired by `mxcl/AppUpdater`, powe
 - Code-sign identity verification before install
 - Install-and-relaunch flow for in-place updates
 
+### Hierarchy
+- v1.0-patch.1
+- v1.0
+- v1.0-rc.1
+- v1.0-beta.1
+- v1.0-alpha.1
+
 ## Installation
 
 ```swift
