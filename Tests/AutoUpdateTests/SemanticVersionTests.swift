@@ -26,7 +26,7 @@ struct Tests {
     }
     
     @Test
-    func acceptsVPrefix() throws {
+    func acceptsVersionPrefix() throws {
         let version = try SemanticVersion(parsing: "v3.2.1")
         #expect(version.description == "3.2.1")
     }
