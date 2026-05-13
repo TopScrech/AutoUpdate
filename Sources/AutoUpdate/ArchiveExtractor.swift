@@ -1,11 +1,7 @@
 import Foundation
 
 enum ArchiveExtractor {
-    static func extractArchive(
-        at archiveURL: URL,
-        type: ArchiveType,
-        into directoryURL: URL
-    ) async throws -> URL {
+    static func extractArchive(at archiveURL: URL, type: ArchiveType, into directoryURL: URL) async throws -> URL {
         try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         
         let output: ProcessOutput
@@ -30,6 +26,7 @@ enum ArchiveExtractor {
         guard let appURL = findAppBundle(in: directoryURL) else {
             throw AppUpdaterError.noDownloadedApplicationBundle
         }
+        
         return appURL
     }
     

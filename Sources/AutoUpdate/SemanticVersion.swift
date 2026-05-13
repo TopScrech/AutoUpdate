@@ -2,8 +2,7 @@ import Foundation
 
 public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConvertible {
     public enum Identifier: Hashable, Sendable {
-        case numeric(Int)
-        case text(String)
+        case numeric(Int), text(String)
     }
     
     public let major: Int
@@ -38,6 +37,7 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
         let prereleaseSection = prereleaseSplit.count > 1 ? String(prereleaseSplit[1]) : nil
         
         let components = mainSection.split(separator: ".", omittingEmptySubsequences: false)
+        
         guard (2...3).contains(components.count) else {
             throw AppUpdaterError.invalidVersionString(versionString)
         }
@@ -47,6 +47,7 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
         }
         
         let patch = components.count == 3 ? Int(components[2]) : 0
+        
         guard let patch else {
             throw AppUpdaterError.invalidVersionString(versionString)
         }
@@ -65,15 +66,19 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
                 switch $0 {
                 case .numeric(let number):
                     return String(number)
+                    
                 case .text(let text):
                     return text
                 }
             }.joined(separator: ".")
+            
             value += "-\(label)"
         }
+        
         if !buildMetadata.isEmpty {
             value += "+\(buildMetadata.joined(separator: "."))"
         }
+        
         return value
     }
     
@@ -87,6 +92,7 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
         if rhs.prerelease.isEmpty { return true }
         
         let maxCount = max(lhs.prerelease.count, rhs.prerelease.count)
+        
         for index in 0..<maxCount {
             guard index < lhs.prerelease.count else { return true }
             guard index < rhs.prerelease.count else { return false }

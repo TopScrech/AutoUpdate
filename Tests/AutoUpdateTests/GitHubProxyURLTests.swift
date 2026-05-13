@@ -12,6 +12,7 @@ func leavesURLUntouchedWithoutProxy() {
 @Test
 func prefixesReleaseAPIRouteWithProxy() {
     let proxyURL = URL(string: "https://ghproxy.example.com")!
+    
     let url = GitHubProxyURL.releasesURL(
         owner: "owner",
         repository: "repository",

@@ -33,6 +33,8 @@ private func decodeRelease(tagName: String, assetNames: [String]) throws -> Rele
         "body": "Notes",
         "assets": assets
     ]
+    
     let data = try JSONSerialization.data(withJSONObject: payload)
+    
     return try JSONDecoder().decode(Release.self, from: data)
 }

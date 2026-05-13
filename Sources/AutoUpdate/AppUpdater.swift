@@ -101,6 +101,7 @@ public actor AppUpdater {
             
             Task {
                 let shouldDefer = await self.shouldDeferAutomaticCheck()
+                
                 guard !shouldDefer else {
                     completion(.deferred)
                     return
@@ -246,10 +247,7 @@ public actor AppUpdater {
         }
     }
     
-    private func newestCandidate(
-        releases: [Release],
-        currentVersion: SemanticVersion
-    ) -> UpdateCandidate? {
+    private func newestCandidate(releases: [Release], currentVersion: SemanticVersion) -> UpdateCandidate? {
         let available = releases
             .compactMap { release -> (Release, SemanticVersion)? in
                 guard let version = release.semanticVersion else { return nil }
@@ -297,17 +295,15 @@ public actor AppUpdater {
         }
     }
     
-    static func expectedAssetBaseNames(
-        releasePrefix: String,
-        release: Release,
-        version: SemanticVersion? = nil
-    ) -> Set<String> {
+    static func expectedAssetBaseNames(releasePrefix: String, release: Release, version: SemanticVersion? = nil) -> Set<String> {
         guard let resolvedVersion = version ?? release.semanticVersion else { return [] }
         
         let normalizedReleasePrefix = releasePrefix.lowercased()
+        
         let rawTagName = release.tagName
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .lowercased()
+        
         let rawTagNameWithoutV = rawTagName.hasPrefix("v")
         ? String(rawTagName.dropFirst())
         : rawTagName
@@ -364,7 +360,9 @@ public actor AppUpdater {
             asset.downloadURL,
             proxyURL: configuration.gitHubProxyURL
         )
+        
         let (downloadedURL, response) = try await configuration.session.download(from: downloadURL)
+        
         guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }

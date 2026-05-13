@@ -29,6 +29,7 @@ public struct Release: Decodable, Hashable, Sendable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
         tagName = try container.decode(String.self, forKey: .tagName)
         isPrerelease = try container.decode(Bool.self, forKey: .isPrerelease)
         htmlURL = try container.decodeIfPresent(URL.self, forKey: .htmlURL)

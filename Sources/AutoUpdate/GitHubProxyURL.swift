@@ -1,11 +1,7 @@
 import Foundation
 
 enum GitHubProxyURL {
-    static func releasesURL(
-        owner: String,
-        repository: String,
-        proxyURL: URL?
-    ) -> URL {
+    static func releasesURL(owner: String, repository: String, proxyURL: URL?) -> URL {
         let url = URL(string: "https://api.github.com/repos/\(owner)/\(repository)/releases")!
         return resolve(url, proxyURL: proxyURL)
     }

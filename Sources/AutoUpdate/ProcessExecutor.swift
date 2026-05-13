@@ -7,11 +7,7 @@ struct ProcessOutput {
 }
 
 enum ProcessExecutor {
-    static func run(
-        _ executable: String,
-        arguments: [String],
-        currentDirectoryURL: URL? = nil
-    ) async throws -> ProcessOutput {
+    static func run(_ executable: String, arguments: [String], currentDirectoryURL: URL? = nil) async throws -> ProcessOutput {
         try await Task.detached(priority: .userInitiated) {
             let process = Process()
             process.executableURL = URL(fileURLWithPath: executable)
