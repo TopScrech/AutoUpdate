@@ -3,12 +3,14 @@ import Testing
 
 struct Tests {
     @Test
-    func parsesTwoOrThreeComponentVersions() throws {
+    func parsesTwoVersionCompinents() throws {
         let twoComponent = try SemanticVersion(parsing: "1.4")
         #expect(twoComponent.major == 1)
         #expect(twoComponent.minor == 4)
         #expect(twoComponent.patch == 0)
-        
+    }
+    
+    func parsesThreeComponentVersions() throws {
         let threeComponent = try SemanticVersion(parsing: "2.5.9")
         #expect(threeComponent.major == 2)
         #expect(threeComponent.minor == 5)
@@ -16,13 +18,27 @@ struct Tests {
     }
     
     @Test
-    func comparesPrereleasesWithSemverRules() throws {
-        let alpha = try SemanticVersion(parsing: "1.0.0-alpha.1")
+    func stableNewerThanBeta() throws {
         let beta = try SemanticVersion(parsing: "1.0.0-beta.1")
         let stable = try SemanticVersion(parsing: "1.0.0")
         
-        #expect(alpha < beta)
         #expect(beta < stable)
+    }
+    
+    @Test
+    func betaNewerThanAlpha() throws {
+        let alpha = try SemanticVersion(parsing: "1.0.0-alpha.1")
+        let beta = try SemanticVersion(parsing: "1.0.0-beta.1")
+        
+        #expect(alpha < beta)
+    }
+    
+    @Test
+    func patchNewerThanRelease() throws {
+        let release = try SemanticVersion(parsing: "1.0.0")
+        let patch = try SemanticVersion(parsing: "1.0.0-patch.1")
+        
+        #expect(release < patch)
     }
     
     @Test
