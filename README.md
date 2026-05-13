@@ -17,10 +17,10 @@ Modern async/await macOS app updater library inspired by `mxcl/AppUpdater`, powe
 - Code-sign identity verification before install
 - Install-and-relaunch flow for in-place updates
 
-## Install
+## Installation
 
 ```swift
-.package(url: "https://github.com/your-org/AutoUpdate.git", from: "1.0.0")
+.package(url: "https://github.com/TopScrech/Auto-Update.git", from: "1.0.0")
 ```
 
 ## Quick start
