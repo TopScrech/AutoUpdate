@@ -80,4 +80,5 @@ Task {
 
 ## Projects using AutoUpdate
 - 💨 [FanControl](https://github.com/TopScrech/FanControl) - Fan control for macOS
+- 🍪 [Bisquit.Host] - Pterodactyl client for Apple platforms
 - ☕️ [Latte](https://github.com/TopScrech/Latte) - Keep your Mac awake
