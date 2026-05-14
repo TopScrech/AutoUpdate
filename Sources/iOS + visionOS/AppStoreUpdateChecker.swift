@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 
 @MainActor
 @Observable
@@ -10,6 +11,7 @@ public final class AppStoreUpdateChecker {
     public let configuration: AppStoreUpdateConfiguration
     private let session: URLSession
     private let decoder: JSONDecoder
+    private static let logger = Logger(subsystem: "AutoUpdate", category: "AppStoreUpdateChecker")
     
     public init(configuration: AppStoreUpdateConfiguration, session: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
         self.configuration = configuration
@@ -47,7 +49,18 @@ public final class AppStoreUpdateChecker {
     @discardableResult
     public func checkForUpdates(currentVersion: String? = nil) async -> AppStoreUpdateStatus? {
         guard !isChecking else { return latestStatus }
-        guard let resolvedCurrentVersion = currentVersion ?? Self.currentBundleVersion else { return nil }
+        
+        let resolvedCurrentVersion: String
+        if let currentVersion {
+            resolvedCurrentVersion = currentVersion
+        } else if let currentBundleVersion = Self.currentBundleVersion {
+            resolvedCurrentVersion = currentBundleVersion
+            Self.logger.info("Found project version \(currentBundleVersion, privacy: .public)")
+        } else {
+            Self.logger.warning("No current version parameter was passed and no project version was found")
+            return nil
+        }
+        
         guard let lookupURL else { return nil }
         
         isChecking = true
@@ -58,6 +71,13 @@ public final class AppStoreUpdateChecker {
             let response = try decoder.decode(AppStoreLookupResponse.self, from: data)
             let result = response.results.first
             let appStoreVersion = result?.version
+            
+            if let appStoreVersion {
+                Self.logger.info("Fetched App Store version \(appStoreVersion, privacy: .public)")
+            } else {
+                Self.logger.warning("No App Store version was found in lookup response")
+            }
+            
             let updateAvailable = appStoreVersion.map {
                 Self.isUpdateAvailable(currentVersion: resolvedCurrentVersion, appStoreVersion: $0)
             } ?? false
