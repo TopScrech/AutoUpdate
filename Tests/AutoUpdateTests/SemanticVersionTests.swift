@@ -19,6 +19,14 @@ struct Tests {
     }
     
     @Test
+    func `2 components newer than 3`() throws {
+        let two = try SemanticVersion(parsing: "2.0")
+        let one = try SemanticVersion(parsing: "1.0.0")
+        
+        #expect(one < two)
+    }
+    
+    @Test
     func stableNewerThanBeta() throws {
         let beta = try SemanticVersion(parsing: "1.0.0-beta.1")
         let release = try SemanticVersion(parsing: "1.0.0")
