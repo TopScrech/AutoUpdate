@@ -5,23 +5,17 @@ let package = Package(
     name: "AutoUpdate",
     platforms: [
         .iOS(.v17),
-        .macOS(.v13),
-        .visionOS(.v1)
+        .macOS(.v14),
+        .visionOS(.v1),
+        .watchOS(.v10),
+        .tvOS(.v17)
     ],
     products: [
-        .library(
-            name: "AutoUpdate",
-            targets: ["AutoUpdate"]
-        )
+        .library(name: "AutoUpdate", targets: ["AutoUpdate"])
     ],
     targets: [
-        .target(
-            name: "AutoUpdate"
-        ),
-        .testTarget(
-            name: "AutoUpdateTests",
-            dependencies: ["AutoUpdate"]
-        )
+        .target(name: "AutoUpdate"),
+        .testTarget(name: "AutoUpdateTests", dependencies: ["AutoUpdate"])
     ],
     swiftLanguageModes: [.v6]
 )

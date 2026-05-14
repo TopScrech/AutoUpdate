@@ -1,5 +1,3 @@
-#if os(iOS) || os(visionOS)
-
 import Foundation
 
 @MainActor
@@ -115,5 +113,3 @@ public final class AppStoreUpdateChecker {
         return parts
     }
 }
-
-#endif

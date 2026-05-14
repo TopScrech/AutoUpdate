@@ -1,5 +1,3 @@
-#if os(iOS) || os(visionOS)
-
 import Foundation
 
 public struct AppStoreUpdateConfiguration: Equatable, Sendable {
@@ -15,5 +13,3 @@ public struct AppStoreUpdateConfiguration: Equatable, Sendable {
         self.countryCode = countryCode
     }
 }
-
-#endif

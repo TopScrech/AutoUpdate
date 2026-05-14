@@ -1,5 +1,3 @@
-#if os(iOS) || os(visionOS)
-
 import Foundation
 
 struct AppStoreLookupResult: Decodable, Sendable {
@@ -10,5 +8,3 @@ struct AppStoreLookupResult: Decodable, Sendable {
         case version, trackViewURL = "trackViewUrl"
     }
 }
-
-#endif

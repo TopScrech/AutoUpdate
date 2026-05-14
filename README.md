@@ -24,6 +24,13 @@ Modern async/await app updater library for SwiftUI apps. macOS updates are power
 - v1.0-beta.1
 - v1.0-alpha.1
 
+## Available platforms
+- iOS / iPadOS 17+
+- macOS 14+
+- watchOS 10+
+- tvOS 17+
+- visionOS 1+
+
 ## Installation
 
 ```swift

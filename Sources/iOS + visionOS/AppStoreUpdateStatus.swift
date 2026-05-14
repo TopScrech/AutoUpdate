@@ -1,5 +1,3 @@
-#if os(iOS) || os(visionOS)
-
 import Foundation
 
 public struct AppStoreUpdateStatus: Equatable, Sendable {
@@ -15,5 +13,3 @@ public struct AppStoreUpdateStatus: Equatable, Sendable {
         self.updateAvailable = updateAvailable
     }
 }
-
-#endif
