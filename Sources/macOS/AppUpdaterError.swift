@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 public enum AppUpdaterError: Error, LocalizedError, Sendable {
@@ -54,3 +56,5 @@ public enum AppUpdaterError: Error, LocalizedError, Sendable {
         }
     }
 }
+
+#endif

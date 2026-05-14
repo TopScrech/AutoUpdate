@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 enum ArchiveExtractor {
@@ -49,3 +51,5 @@ enum ArchiveExtractor {
         return nil
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 public struct GitHubReleaseProvider: ReleaseProvider, Sendable {
@@ -47,3 +49,5 @@ public struct GitHubReleaseProvider: ReleaseProvider, Sendable {
         return try decoder.decode([Release].self, from: data)
     }
 }
+
+#endif

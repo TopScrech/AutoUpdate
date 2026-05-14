@@ -10,6 +10,7 @@ struct Tests {
         #expect(twoComponent.patch == 0)
     }
     
+    @Test
     func parsesThreeComponentVersions() throws {
         let threeComponent = try SemanticVersion(parsing: "2.5.9")
         #expect(threeComponent.major == 2)

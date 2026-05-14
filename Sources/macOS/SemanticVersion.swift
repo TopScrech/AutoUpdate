@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConvertible {
@@ -139,3 +141,5 @@ public struct SemanticVersion: Comparable, Hashable, Sendable, CustomStringConve
         prerelease.first == .text("patch")
     }
 }
+
+#endif

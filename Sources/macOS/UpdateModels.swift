@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 public struct UpdateCandidate: Hashable, Sendable {
@@ -36,3 +38,5 @@ public enum UpdateCheckResult: Equatable, Sendable {
 public enum UpdatePreparationResult: Equatable, Sendable {
     case upToDate, prepared(PreparedUpdate)
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 struct ProcessOutput {
@@ -33,3 +35,5 @@ enum ProcessExecutor {
         }.value
     }
 }
+
+#endif

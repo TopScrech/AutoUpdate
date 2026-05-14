@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 enum GitHubProxyURL {
@@ -18,3 +20,5 @@ enum GitHubProxyURL {
         return URL(string: "\(prefix)\(url.absoluteString)") ?? url
     }
 }
+
+#endif

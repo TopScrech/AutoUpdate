@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import SwiftUI
 
 public actor AppUpdater {
@@ -393,3 +395,5 @@ public actor AppUpdater {
         }
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 
 public struct Release: Decodable, Hashable, Sendable {
@@ -84,3 +86,5 @@ extension Release.Asset {
         return nil
     }
 }
+
+#endif
