@@ -5,12 +5,14 @@ import Foundation
 public struct AppStoreUpdateConfiguration: Equatable, Sendable {
     public let appID: Int
     public let countryCode: String?
-    public let appStoreURL: URL?
+    
+    public var resolvedAppStoreURL: URL? {
+        URL(string: "https://apps.apple.com/app/id\(appID)")
+    }
 
-    public init(appID: Int, countryCode: String? = nil, appStoreURL: URL? = nil) {
+    public init(appID: Int, countryCode: String? = nil) {
         self.appID = appID
         self.countryCode = countryCode
-        self.appStoreURL = appStoreURL
     }
 }
 

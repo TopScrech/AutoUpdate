@@ -19,8 +19,8 @@ public final class AppStoreUpdateChecker {
         self.decoder = decoder
     }
 
-    public convenience init(appID: Int, countryCode: String? = nil, appStoreURL: URL? = nil) {
-        self.init(configuration: AppStoreUpdateConfiguration(appID: appID, countryCode: countryCode, appStoreURL: appStoreURL))
+    public convenience init(appID: Int, countryCode: String? = nil) {
+        self.init(configuration: AppStoreUpdateConfiguration(appID: appID, countryCode: countryCode))
     }
 
     public static func isUpdateAvailable(currentVersion: String, appStoreVersion: String) -> Bool {
@@ -67,7 +67,7 @@ public final class AppStoreUpdateChecker {
             let status = AppStoreUpdateStatus(
                 currentVersion: resolvedCurrentVersion,
                 appStoreVersion: appStoreVersion,
-                appStoreURL: result?.trackViewURL ?? configuration.appStoreURL,
+                appStoreURL: result?.trackViewURL ?? configuration.resolvedAppStoreURL,
                 updateAvailable: updateAvailable
             )
 
