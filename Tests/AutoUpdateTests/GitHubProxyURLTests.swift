@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 import Testing
 @testable import AutoUpdate
@@ -32,3 +34,5 @@ struct GitHubProxyURLTests {
         #expect(proxiedURL.absoluteString == "https://ghproxy.example.com/mirror/https://github.com/owner/repository/releases/download/v1.2.3/app.zip")
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Foundation
 import Testing
 @testable import AutoUpdate
@@ -39,3 +41,5 @@ struct AppUpdaterAssetMatchingTests {
         return try JSONDecoder().decode(Release.self, from: data)
     }
 }
+
+#endif

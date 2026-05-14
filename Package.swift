@@ -4,7 +4,9 @@ import PackageDescription
 let package = Package(
     name: "AutoUpdate",
     platforms: [
-        .macOS(.v13)
+        .iOS(.v17),
+        .macOS(.v13),
+        .visionOS(.v1)
     ],
     products: [
         .library(

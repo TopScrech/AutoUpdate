@@ -1,3 +1,5 @@
+#if os(macOS)
+
 import Testing
 @testable import AutoUpdate
 
@@ -64,3 +66,5 @@ struct Tests {
         #expect(version.description == "3.2.1")
     }
 }
+
+#endif
