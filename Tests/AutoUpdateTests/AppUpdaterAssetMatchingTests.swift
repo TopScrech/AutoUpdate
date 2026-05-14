@@ -21,13 +21,12 @@ struct AppUpdaterAssetMatchingTests {
     }
     
     private func decodeRelease(tagName: String, assetNames: [String]) throws -> Release {
-        let assets = assetNames.map {
-            [
-                "name": $0,
-                "browser_download_url": "https://example.com/\($0)",
-                "content_type": "application/zip"
-            ]
-        }
+        let assets = assetNames.map {[
+            "name": $0,
+            "browser_download_url": "https://example.com/\($0)",
+            "content_type": "application/zip"
+        ]}
+        
         let payload: [String: Any] = [
             "tag_name": tagName,
             "prerelease": false,
